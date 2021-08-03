@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col">
         <div class="card mt-3">
-        <h5 class="card-header"><a href="/blog/{{ $category->slug }}">{{ $category->name }}</a></h5>
+        <h5 class="card-header"><a href="/categories/{{ $category->slug }}">{{ $category->name }}</a></h5>
         </div>
         </div>
     </div>
