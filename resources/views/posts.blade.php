@@ -7,7 +7,7 @@
         <div class="card mt-3">
         <h5 class="card-header text-decoration-none"><a class="text-decoration-none" href="/blog/{{ $post->slug }}">{{ $post->title }}</a></h5>
         <div class="card-body">
-        <h6 >By <a class="text-decoration-none" href="/user/{{ $post->user->name }}">{{ $post->user->name }}</a> In <a class="text-decoration-none" href="/categories/{{ $post->category->slug }}">{{ $post->category->name }}</a></h6>
+        <h6 >By <a class="text-decoration-none" href="/authors/{{ $post->author->username }}">{{ $post->author->name }}</a> In <a class="text-decoration-none" href="/categories/{{ $post->category->slug }}">{{ $post->category->name }}</a></h6>
             <!-- <h6 class="">{{ $post['author'] }}</h6> -->
             <p class="card-text">{{ $post->excerpt }}</p>
         </div>
