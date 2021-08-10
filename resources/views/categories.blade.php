@@ -10,7 +10,7 @@
             <div class="card bg-dark text-white">
                 <img src="https://source.unsplash.com/1200x400?{{ $category->name }}" class="card-img" alt="...">
                 <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                    <h5 class="card-title text-center"><a href="/categories/{{ $category->slug }}" class="text-decoration-none text-white">{{ $category->name }}</a></h5>
+                    <h5 class="card-title text-center"><a href="/blog?category={{ $category->slug }}" class="text-decoration-none text-white">{{ $category->name }}</a></h5>
                 </div>
             </div>
             </div>
