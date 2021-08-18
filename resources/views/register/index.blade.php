@@ -5,23 +5,43 @@
   <div class="col-lg-6">
     <main class="form-signin">
       <h1 class="h3 mb-3 fw-normal text-center">Please sign up</h1>
-      <form>
-        <!-- <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
+      <form action="/register" method="post">
+        @csrf
         <div class="form-floating">
-          <input type="text" name="name" class="form-control rounded-top" id="name" placeholder="name">
+          <input type="text" name="name" class="form-control rounded-top @error('name') is-invalid @enderror" id="name" placeholder="name" required value="{{ old('name') }}">
           <label for="name">Name</label>
+          @error('name')
+          <div class="invalid-feedback">
+            {{ $message }}
+          </div>
+          @enderror
         </div>
         <div class="form-floating">
-          <input type="text" name="username" class="form-control" id="username" placeholder="username">
+          <input type="text" name="username" class="form-control  @error('username') is-invalid @enderror" id="username" placeholder="username" required value="{{ old('username') }}">
           <label for="username">UserName</label>
+          @error('username')
+          <div class="invalid-feedback">
+            {{ $message }}
+          </div>
+          @enderror
         </div>
         <div class="form-floating">
-          <input type="mail" name="email" class="form-control" id="email" placeholder="email">
+          <input type="mail" name="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="email" required value="{{ old('email') }}">
           <label for="email">Email</label>
+          @error('email')
+          <div class="invalid-feedback">
+            {{ $message }}
+          </div>
+          @enderror
         </div>
         <div class="form-floating">
-          <input type="password" name="password" class="form-control rounded-bottom" id="password" placeholder="Password">
+          <input type="password" name="password" class="form-control rounded-bottom @error('password') is-invalid @enderror" id="password" placeholder="Password" required>
           <label for="password">Password</label>
+          @error('password')
+          <div class="invalid-feedback">
+            {{ $message }}
+          </div>
+          @enderror
         </div>
     
         <!-- <div class="checkbox mb-3">
