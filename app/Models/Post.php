@@ -45,4 +45,9 @@ class Post extends Model
     public function author(){
         return $this->BelongsTo(User::class, 'user_id');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

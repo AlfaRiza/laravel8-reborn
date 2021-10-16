@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardPostController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
@@ -54,6 +55,7 @@ Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
+Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
 // Route::get('categories/{category:slug}', function(Category $category){
 //     return view('posts', [
 //         'title' => "Post By Category : $category->name",
