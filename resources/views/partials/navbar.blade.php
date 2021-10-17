@@ -28,7 +28,7 @@
             Wellcome back, {{ auth()->user()->name }}
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarLogin">
-            <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> My Dashboard</a></li>
+            <li><a class="dropdown-item" href="{{ url('dashboard') }}"><i class="bi bi-person"></i> My Dashboard</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>
                 <form action="/logout" method="post">

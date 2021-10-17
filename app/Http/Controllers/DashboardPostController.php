@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Str;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+// use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class DashboardPostController extends Controller
 {
@@ -26,7 +28,8 @@ class DashboardPostController extends Controller
      */
     public function create()
     {
-        //
+        $category = Category::all();
+        return view('dashboard.posts.create', ['category' => $category]);
     }
 
     /**
@@ -37,7 +40,23 @@ class DashboardPostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            // 'slug' => 'required|unique:posts,slug',
+            'category_id' => 'required',
+            'body' => 'required',
+        ]);
+
+        $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['slug'] = Str::of($validatedData['title'])->slug('-');
+        // dd(Post::pluck('slug')->toArray());
+        if(in_array($validatedData['slug'], Post::pluck('slug')->toArray())){
+            return redirect('dashboard/posts/create')->with('error', 'Judul post sudah ada');
+        }
+        $validatedData['excerpt'] = Str::limit(strip_tags($validatedData['body']), 100, '. . .');
+
+        Post::create($validatedData);
+        return redirect('dashboard/posts')->with('success', 'Post berhasil ditambahkan');
     }
 
     /**
@@ -59,7 +78,7 @@ class DashboardPostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('dashboard.posts.edit', ['post' => $post, 'category' => Category::all()]);
     }
 
     /**
@@ -71,7 +90,25 @@ class DashboardPostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            // 'slug' => 'required|unique:posts,slug',
+            'category_id' => 'required',
+            'body' => 'required',
+        ]);
+
+        $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['slug'] = Str::of($validatedData['title'])->slug('-');
+        // dd(Post::pluck('slug')->toArray());
+        if($validatedData['slug'] != $post->slug){
+            if(in_array($validatedData['slug'], Post::pluck('slug')->toArray())){
+                return redirect('dashboard/posts/create')->with('error', 'Judul post sudah ada');
+            }
+        }
+        $validatedData['excerpt'] = Str::limit(strip_tags($validatedData['body']), 100, '. . .');
+
+        Post::where('id', $post->id)->update($validatedData);
+        return redirect('dashboard/posts')->with('success', 'Post berhasil diubah');
     }
 
     /**
@@ -82,6 +119,14 @@ class DashboardPostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        Post::destroy($post->id);
+        return redirect('dashboard/posts')->with('success', 'Post berhasil dihapus');
     }
+
+    // public function checkSlug(Request $request){
+    //     $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
+    //     return response()->json([
+    //         'slug' => $slug
+    //     ]);
+    // }
 }
