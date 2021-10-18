@@ -23,7 +23,14 @@
 
     @if($posts->count())
     <div class="card mb-3">
-    <img src="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}" class="card-img-top" alt="...">
+    @if($post[0]->image)
+    <div style="max-height: 400px; overflow: hidden;">
+        <img src="{{ asset('storage/' . $post[0]->image) }}" class="img-fluid" alt="{{ $post[0]->category->name }}">
+    </div>
+    @else
+    <img src="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}" class="card-img-top" alt="...">    
+    @endif
+    
     <div class="card-body text-center">
         <h3 class="card-title"><a class="text-decoration-none text-dark" href="/blog/{{ $posts[0]->slug }}">{{ $posts[0]->title }}</a></h3>
         <p class="text-small">By <a class="text-decoration-none" href="/blog?author={{ $posts[0]->author->username }}">{{ $posts[0]->author->name }}</a> In <a class="text-decoration-none" href="/blog?category={{ $posts[0]->category->slug }}">{{ $posts[0]->category->name }}</a> {{ $posts[0]->created_at->diffForHumans() }}</p>
@@ -38,7 +45,13 @@
             <div class="col-md-4 mb-3">
                 <div class="card">
                 <div class="position-absolute badge bg-info text-dark"><a class="text-decoration-none text-white" href="/categories/{{ $post->category->slug }}">{{ $post->category->name }}</a></div>
+                @if($post->image)
+                <!-- <div style="max-height: 400px; overflow: hidden;"> -->
+                <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid" alt="{{ $post->category->name }}">
+                <!-- </div> -->
+                @else
                 <img src="https://source.unsplash.com/500x400?{{ $post->category->name }}" class="card-img-top" alt="{{ $post->category->name }}">
+                @endif
                 <div class="card-body">
                     <h5 class="card-title"><a class="text-decoration-none text-dark" href="/blog?category={{ $post->slug }}">{{ $post->title }}</a></h5>
                     <p >By <a class="text-decoration-none" href="/blog?author={{ $post->author->username }}">{{ $post->author->name }}</a> {{ $post->created_at->diffForHumans() }} </p>

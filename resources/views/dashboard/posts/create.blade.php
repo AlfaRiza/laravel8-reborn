@@ -14,7 +14,7 @@
 @endif
 
 <div class="col-8">
-<form method="post" action="{{ url('dashboard/posts') }}">
+<form method="post" action="{{ url('dashboard/posts') }}" enctype="multipart/form-data">
   @csrf 
   <div class="mb-3">
     <label for="title" class="form-label">Title</label>
@@ -42,6 +42,16 @@
   </div>
 
   <div class="mb-3">
+    <label for="image" class="form-label">Gambar Post</label>
+    <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image">
+    @error('image') 
+    <div class="invalid-feedback">
+      {{ $message }}
+    </div>
+    @enderror
+  </div>
+
+  <div class="mb-3">
     <label for="body" class="form-label">Body</label>
     @error('title') 
       <div class="invalid-feedback">
@@ -50,7 +60,10 @@
     @enderror
     <input id="body" type="hidden" name="body">
     <trix-editor input="body"></trix-editor>
+    
   </div>
+
+  
   
   <button type="submit" class="btn btn-primary">Create Post</button>
 </form>
